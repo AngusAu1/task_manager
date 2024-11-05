@@ -3,6 +3,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy                                 # ORM of python for communication with db
 from datetime import datetime                                           # record time use
+from flask_migrate import Migrate                                       # import Flask-Migrate
 
 
 # Connect to the db, for 'add', 'update' and 'delete' tasks
@@ -10,9 +11,11 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'             # connect app to the db: sqlite 'test.db'
 
 # Initialize the database ORM (Object-Relational Mapping)
-with app.app_context():
-    db = SQLAlchemy(app)
+#with app.app_context():
+#    db = SQLAlchemy(app)
 
+db = SQLAlchemy(app)  # 初始化 SQLAlchemy
+migrate = Migrate(app, db)  # 初始化 Flask-Migrate
 
 # Create db schema, based on Flask-SQLAlchemy ORM model to handle Todo in the database 
 # create schema: primary key - id, content and date_created
